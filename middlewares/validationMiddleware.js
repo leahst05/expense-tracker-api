@@ -1,5 +1,6 @@
 //Middleware to validate user data before creating a user
 const validateUser = (req, res, next) =>{
+    //Ensure all keys are present when creating a user.
     const {name, username, email, address} = req.body;
     if(!name || !username || !email || !address || !address.street || !address.suite || !address.city || !address.zipcode){
         const err = new Error('You need to provide all required information in order to create the user.');
@@ -10,6 +11,7 @@ const validateUser = (req, res, next) =>{
 
 //Middleware to validate user data before creating income
 const validateIncome = (req, res, next) =>{
+    //Ensure all keys are present when creating income.
     const {wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others} = req.body;
     if(!wages || !secondaryIncome || !interest || !supportPayment|| !others){
         const err = new Error('You need to provide all required information in order to create the income.');
@@ -18,7 +20,7 @@ const validateIncome = (req, res, next) =>{
     next()
 };
 
-
+//Middleware to validate expense data before creating expense
 const validateExpense = (req, res, next) =>{
 
     const exampleObj = {
@@ -67,11 +69,12 @@ const validateExpense = (req, res, next) =>{
     }
     };
 
+    //To check if all keys in objA are in objB
     const hasAllKeys = (objA, objB) => {
         return Object.keys(objA).every(key=> key in objB)
     };
     
-
+    //Ensure all keys are present when creating expense
     if (
         !req.body.Savings || !hasAllKeys(exampleObj.Savings, req.body.Savings) ||
         !req.body["Payment Obligations"] || !hasAllKeys(exampleObj["Payment Obligations"], req.body["Payment Obligations"]) ||

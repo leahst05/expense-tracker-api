@@ -2,12 +2,13 @@ const usersRouter = require('express').Router();
 const db = require('../config/firebase');
 const {validateUser} = require('../middlewares/validationMiddleware');
 const errorMiddleware = require('../middlewares/errorMiddleware');
-
+const {userObj} = require('../middlewares/createObjects')
+ 
 //Reference to the Firebase database path "users"
 const userRef = db.ref("users")
 
-
-usersRouter.param('userId', (req, res, next, id) => {
+//Pre-processing route parameters
+usersRouter.param('id', (req, res, next, id) => {
     let userId = id;
     try{
         userRef.once("value", function(snapshot) {
@@ -30,7 +31,7 @@ usersRouter.param('userId', (req, res, next, id) => {
     }
 )
 
-
+// Route to get all users
 usersRouter.get('/', (req, res, next) => {
     userRef.once("value", function(snapshot) {
         const users = (snapshot.val());
@@ -45,38 +46,31 @@ usersRouter.get('/', (req, res, next) => {
       })
 })
 
-usersRouter.get('/:userId', (req, res, next)=>{
+// Route to get a single user by userId
+usersRouter.get('/:id', (req, res, next)=>{
         res.send(req.user)
 })
 
+// Route to create a new user
 usersRouter.post('/', validateUser, (req, res, next)=>{
-    const {name, username, email, address} = req.body;
-
     const newUserRef = userRef.push()
-
     const userId = newUserRef.key;
 
-    const userObj = {
-        id: userId,
-        name,
-        username,
-        email,
-        address
-    }
-    
-    newUserRef.set(userObj)
+    const newUserObj = userObj(req.body);
+    newUserObj.id = userId
+
+    newUserRef.set(newUserObj)
 
     res.status(201).json({
         message:'User has been created',
-        user: userObj
+        user: newUserObj
     })
 })
 
-usersRouter.put('/:userId', (req, res, next)=>{
-    const {name, username, email, address} = req.body;
-    const updatedUser ={
-        ...req.user, id:req.user.id, name, username, email, address
-    }
+// Route to update an existing user's data
+usersRouter.put('/:id', (req, res, next)=>{
+    const updatedUser = userObj(req.body);
+    updatedUser.id = req.user.id;
 
     userRef.child(req.user.id).set(updatedUser)
     res.status(200).json({
@@ -85,7 +79,8 @@ usersRouter.put('/:userId', (req, res, next)=>{
     })
 })
 
-usersRouter.delete('/:userId', (req, res, next)=>{
+// Route to delete an existing user
+usersRouter.delete('/:id', (req, res, next)=>{
     const deletedUser = req.user
     userRef.child(req.user.id).set(null)
     res.json({
@@ -93,6 +88,7 @@ usersRouter.delete('/:userId', (req, res, next)=>{
         user:deletedUser})
 })
 
+// Use the error handling middleware for all routes in this router
 usersRouter.use(errorMiddleware);
 
 module.exports = usersRouter

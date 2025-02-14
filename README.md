@@ -85,7 +85,7 @@ Below are examples of the data structure used by the API. Please note that if yo
     }
   }
 
-- Expenses Data Example
+- Expense Data Example
   ```json
   {
     "Savings": {

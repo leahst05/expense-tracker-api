@@ -2,12 +2,13 @@ const incomeRouter = require('express').Router();
 const db = require('../config/firebase')
 const {validateIncome} = require('../middlewares/validationMiddleware')
 const errorMiddleware = require('../middlewares/errorMiddleware');
+const {incomeObj} = require('../middlewares/createObjects')
 
-
+//Reference to the Firebase database path "income"
 const incomeRef = db.ref("income")
 
-
-incomeRouter.param('incomeId', (req, res, next, id) => {
+//Pre-processing route parameters
+incomeRouter.param('id', (req, res, next, id) => {
     let incomeId = id;
     try{
         incomeRef.once("value", function(snapshot) {
@@ -30,6 +31,7 @@ incomeRouter.param('incomeId', (req, res, next, id) => {
     }
 )
 
+// Route to get all income
 incomeRouter.get('/', (req, res, next) => {
     incomeRef.once("value", function(snapshot) {
         const income = (snapshot.val());
@@ -44,39 +46,31 @@ incomeRouter.get('/', (req, res, next) => {
       })
 })
 
-incomeRouter.get('/:incomeId', (req, res, next)=>{
+// Route to get a single income by incomeId
+incomeRouter.get('/:id', (req, res, next)=>{
         res.send(req.income)
 })
 
+// Route to create a new income.
 incomeRouter.post('/', validateIncome, (req, res, next)=>{
-    const {wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others} = req.body;
-
     const newIncomeRef = incomeRef.push()
-
     const incomeId = newIncomeRef.key;
 
-    const incomeObj = {
-        id: incomeId,
-        wages,
-        "secondary income":secondaryIncome,
-        interest,
-        "support payment": supportPayment,
-        others
-    }
+    const newIncomeObj = incomeObj(req.body)
+    newIncomeObj.id = incomeId
     
-    newIncomeRef.set(incomeObj)
+    newIncomeRef.set(newIncomeObj)
 
     res.status(201).json({
         message:'Income has been created',
-        income: incomeObj
+        income: newIncomeObj
     })
 })
 
-incomeRouter.put('/:incomeId', (req, res, next)=>{
-    const {wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others} = req.body;
-    const updatedIncome ={
-        ...req.income, id:req.income.id, wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others
-    }
+//// Route to update an existing income data
+incomeRouter.put('/:id', (req, res, next)=>{
+    const updatedIncome = incomeObj(req.body);
+    updatedIncome.id = req.income.id;
 
     incomeRef.child(req.income.id).set(updatedIncome)
     res.status(200).json({
@@ -85,7 +79,8 @@ incomeRouter.put('/:incomeId', (req, res, next)=>{
     })
 })
 
-incomeRouter.delete('/:incomeId', (req, res, next)=>{
+// Route to delete an existing income
+incomeRouter.delete('/:id', (req, res, next)=>{
     const deletedIncome = req.income
     incomeRef.child(req.income.id).set(null)
     res.json({
@@ -93,6 +88,7 @@ incomeRouter.delete('/:incomeId', (req, res, next)=>{
         income:deletedIncome})
 })
 
+// Use the error handling middleware for all routes in this router
 incomeRouter.use(errorMiddleware);
 
 module.exports = incomeRouter
