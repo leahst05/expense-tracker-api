@@ -1,0 +1,58 @@
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    height: 50px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+
+/* Section styling */
+#container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#container section {
+    margin-bottom: 40px;
+    width: 500px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Styling for lists inside the sections */
+ul {
+    padding-left: 0;
+    text-align: left;
+}
+
+ul li {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Expense Tracker API</title>
+</head>
+
+<body>
+    <header>
+        <H1>Welcome to Expense Tracker API</H1>
+    </header>
+
+    <section id="about">
+        <h2>About the API</h2>
+        <p>This simple REST API allows you to manage users, expenses, and income through various endpoints.</p>
+    </section>
+
+    <div id="container">
+        <section id="users">
+            <h2>Users Endpoints</h2>
+            <p>Manage users with the following endpoints:</p>
+            <ul>
+                <li><strong>GET /users</strong> - Retrieve all users</li>
+                <li><strong>POST /users</strong> - Add a new user</li>
+                <li><strong>PUT /users/:userId</strong> - Update an existing user by user ID</li>
+                <li><strong>DELETE /users/:userId</strong> - Delete a user by user ID</li>
+            </ul>
+            </section>
+
+            <section id="expenses">
+            <h2>Expenses Endpoints</h2>
+            <p>Manage expenses with the following endpoints:</p>
+            <ul>
+                <li><strong>GET /expenses</strong> - Retrieve all expenses</li>
+                <li><strong>POST /expenses</strong> - Add a new expense</li>
+                <li><strong>PUT /expenses/:expenseId</strong> - Update an existing expense by expense ID</li>
+                <li><strong>DELETE /expenses/:expenseId</strong> - Delete an expense by expense ID</li>
+            </ul>
+            </section>
+
+        <section id="income">
+            <h2>Income Endpoints</h2>
+            <p>Manage income with the following endpoints:</p>
+            <ul>
+                <li><strong>GET /income</strong> - Retrieve all income</li>
+                <li><strong>POST /income</strong> - Add a new income</li>
+                <li><strong>PUT /income/:incomeId</strong> - Update an existing income by income ID</li>
+                <li><strong>DELETE /income/:incomeId</strong> - Delete an income by income ID</li>
+            </ul>
+            </section>
+    </div>
+
+</body>
+</html>
