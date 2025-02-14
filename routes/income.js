@@ -2,7 +2,7 @@ const incomeRouter = require('express').Router();
 const db = require('../config/firebase')
 const {validateIncome} = require('../middlewares/validationMiddleware')
 const errorMiddleware = require('../middlewares/errorMiddleware');
-const {incomeObj} = require('../middlewares/createObjects')
+const {incomeObj} = require('../controller/createObjects')
 
 //Reference to the Firebase database path "income"
 const incomeRef = db.ref("income")

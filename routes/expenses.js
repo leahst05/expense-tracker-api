@@ -2,7 +2,7 @@ const expenseRouter = require('express').Router();
 const db = require('../config/firebase')
 const {validateExpense} = require('../middlewares/validationMiddleware');
 const errorMiddleware = require('../middlewares/errorMiddleware');
-const {expenseObj} = require('../middlewares/createObjects.js');
+const {expenseObj} = require('../controller/createObjects.js');
 
 
 

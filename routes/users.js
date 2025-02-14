@@ -2,7 +2,7 @@ const usersRouter = require('express').Router();
 const db = require('../config/firebase');
 const {validateUser} = require('../middlewares/validationMiddleware');
 const errorMiddleware = require('../middlewares/errorMiddleware');
-const {userObj} = require('../middlewares/createObjects')
+const {userObj} = require('../controller/createObjects')
  
 //Reference to the Firebase database path "users"
 const userRef = db.ref("users")
