@@ -1,6 +1,6 @@
 //Middleware to validate user data before creating or updating a user
 const validateUser = (req, res, next) =>{
-    //Ensure all keys are present when creating a user.
+    //Ensure all keys are present when creating or updating a user.
     const {name, username, email, address} = req.body;
     if(!name || !username || !email || !address || !address.street || !address.suite || !address.city || !address.zipcode){
         const err = new Error('You need to provide all required information in order to create or update the user.');
@@ -11,7 +11,7 @@ const validateUser = (req, res, next) =>{
 
 //Middleware to validate user data before creating or updating income
 const validateIncome = (req, res, next) =>{
-    //Ensure all keys are present when creating income.
+    //Ensure all keys are present when creating or updating income.
     const {wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others} = req.body;
     if(!wages || !secondaryIncome || !interest || !supportPayment|| !others){
         const err = new Error('You need to provide all required information in order to create or update the income.');
@@ -74,7 +74,7 @@ const validateExpense = (req, res, next) =>{
         return Object.keys(objA).every(key=> key in objB)
     };
     
-    //Ensure all keys are present when creating expense
+    //Ensure all keys are present when creating or updating expense
     if (
         !req.body.Savings || !hasAllKeys(exampleObj.Savings, req.body.Savings) ||
         !req.body["Payment Obligations"] || !hasAllKeys(exampleObj["Payment Obligations"], req.body["Payment Obligations"]) ||
