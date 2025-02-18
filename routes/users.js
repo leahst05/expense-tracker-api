@@ -68,7 +68,7 @@ usersRouter.post('/', validateUser, (req, res, next)=>{
 })
 
 // Route to update an existing user's data
-usersRouter.put('/:id', (req, res, next)=>{
+usersRouter.put('/:id', validateUser, (req, res, next)=>{
     const updatedUser = userObj(req.body);
     updatedUser.id = req.user.id;
 

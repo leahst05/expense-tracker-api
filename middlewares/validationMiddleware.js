@@ -1,26 +1,26 @@
-//Middleware to validate user data before creating a user
+//Middleware to validate user data before creating or updating a user
 const validateUser = (req, res, next) =>{
     //Ensure all keys are present when creating a user.
     const {name, username, email, address} = req.body;
     if(!name || !username || !email || !address || !address.street || !address.suite || !address.city || !address.zipcode){
-        const err = new Error('You need to provide all required information in order to create the user.');
+        const err = new Error('You need to provide all required information in order to create or update the user.');
         err.status = 400
         next(err)}
     next()
 }
 
-//Middleware to validate user data before creating income
+//Middleware to validate user data before creating or updating income
 const validateIncome = (req, res, next) =>{
     //Ensure all keys are present when creating income.
     const {wages, "secondary income":secondaryIncome, interest, "support payment": supportPayment, others} = req.body;
     if(!wages || !secondaryIncome || !interest || !supportPayment|| !others){
-        const err = new Error('You need to provide all required information in order to create the income.');
+        const err = new Error('You need to provide all required information in order to create or update the income.');
         err.status = 400
         next(err)}
     next()
 };
 
-//Middleware to validate expense data before creating expense
+//Middleware to validate expense data before creating or updating expense
 const validateExpense = (req, res, next) =>{
 
     const exampleObj = {
@@ -83,7 +83,7 @@ const validateExpense = (req, res, next) =>{
         !req.body.Utilities || !hasAllKeys(exampleObj.Utilities, req.body.Utilities) ||
         !req.body.Personal || !hasAllKeys(exampleObj.Personal, req.body.Personal)
     ) {
-        const err = new Error('You need to provide all required information in order to create the expense.');
+        const err = new Error('You need to provide all required information in order to create or update the expense.');
         err.status = 400
         next(err)
     }

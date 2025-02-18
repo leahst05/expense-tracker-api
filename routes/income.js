@@ -68,7 +68,7 @@ incomeRouter.post('/', validateIncome, (req, res, next)=>{
 })
 
 //// Route to update an existing income data
-incomeRouter.put('/:id', (req, res, next)=>{
+incomeRouter.put('/:id', validateIncome, (req, res, next)=>{
     const updatedIncome = incomeObj(req.body);
     updatedIncome.id = req.income.id;
 
