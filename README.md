@@ -28,7 +28,7 @@ Open the terminal and navigate to the directory using the command below:
 Then, run the following command in the terminal:
      ```bash
      git clone https://github.com/leahst05/expense-tracker-api.git
-    ```
+  
 - Install dependencies
   ```bash
   npm init
