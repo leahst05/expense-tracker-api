@@ -136,11 +136,11 @@ Below are examples of the data structure used by the API. Please note that if yo
 - Income Data Example
   ```json
   {
-      "interest": 350,
-      "others": 600,
-      "secondary income": 1500,
-      "support payment": 120,
-      "wages": 8000
+    "interest": 350,
+    "others": 600,
+    "secondary income": 1500,
+    "support payment": 120,
+    "wages": 8000
   }
 
 # Conclusion
