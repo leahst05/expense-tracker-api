@@ -3,7 +3,7 @@ const db = require('../config/firebase')
 const {validateExpense} = require('../middlewares/validationMiddleware');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 const {expenseObj} = require('../controller/createObjects.js');
-
+const displayObjArr = require('../controller/displayObjArr.js')
 
 
 //Reference to the Firebase database path "expenses"
@@ -37,29 +37,27 @@ expenseRouter.param('id', (req, res, next, id) => {
 expenseRouter.get('/', (req, res, next) => {
     expenseRef.once("value", function(snapshot) {
         const expenses = (snapshot.val());
-        if(expenses){
-            const usersArr = Object.values(expenses);
-            res.send(usersArr);
-        }else{
-            const err = new Error('No expense has been created')
-            err.status = 404
-            next(err);
-        }
+        displayObjArr(expenses, res,next)
       })
 })
 
 // Route to get a single expense by expenseId
 expenseRouter.get('/:id', (req, res, next)=>{
-        res.send(req.expense)
+    req.expense = {id:req.expense.id, ...req.expense}
+    res.send(req.expense)
 })
 
 //Route to create a new expense
 expenseRouter.post('/', validateExpense, (req, res, next)=>{
     const newExpenseRef = expenseRef.push()
     const expenseId = newExpenseRef.key;
+    console.log(expenseId);
 
-    const newExpenseObj = expenseObj(req.body)
-    newExpenseObj.id = expenseId
+    
+    const newExpenseObj = expenseObj(req.body);
+    newExpenseObj.id = expenseId;
+    console.log(newExpenseObj.id)
+    
     
     newExpenseRef.set(newExpenseObj)
 

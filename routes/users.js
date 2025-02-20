@@ -3,6 +3,7 @@ const db = require('../config/firebase');
 const {validateUser} = require('../middlewares/validationMiddleware');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 const {userObj} = require('../controller/createObjects')
+const displayObjArr = require('../controller/displayObjArr')
  
 //Reference to the Firebase database path "users"
 const userRef = db.ref("users")
@@ -35,20 +36,14 @@ usersRouter.param('id', (req, res, next, id) => {
 usersRouter.get('/', (req, res, next) => {
     userRef.once("value", function(snapshot) {
         const users = (snapshot.val());
-        if(users){
-            const usersArr = Object.values(users);
-            res.send(usersArr);
-        }else{
-            const err = new Error('No user has been created')
-            err.status = 404
-            next(err);
-        }
+        displayObjArr(users, res,next)
       })
 })
 
 // Route to get a single user by userId
 usersRouter.get('/:id', (req, res, next)=>{
-        res.send(req.user)
+    req.user = {id:req.user.id, ...req.user }
+    res.send(req.user)
 })
 
 // Route to create a new user

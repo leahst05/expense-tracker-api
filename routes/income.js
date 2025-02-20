@@ -3,6 +3,7 @@ const db = require('../config/firebase')
 const {validateIncome} = require('../middlewares/validationMiddleware')
 const errorMiddleware = require('../middlewares/errorMiddleware');
 const {incomeObj} = require('../controller/createObjects')
+const displayObjArr = require('../controller/displayObjArr.js')
 
 //Reference to the Firebase database path "income"
 const incomeRef = db.ref("income")
@@ -35,20 +36,14 @@ incomeRouter.param('id', (req, res, next, id) => {
 incomeRouter.get('/', (req, res, next) => {
     incomeRef.once("value", function(snapshot) {
         const income = (snapshot.val());
-        if(income){
-            const usersArr = Object.values(income);
-            res.send(usersArr);
-        }else{
-            const err = new Error('No income has been created')
-            err.status = 404
-            next(err);
-        }
+        displayObjArr(income, res,next)
       })
 })
 
 // Route to get a single income by incomeId
 incomeRouter.get('/:id', (req, res, next)=>{
-        res.send(req.income)
+    req.income = {id:req.income.id, ...req.income }
+    res.send(req.income)
 })
 
 // Route to create a new income.

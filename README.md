@@ -26,9 +26,9 @@ Open the terminal and navigate to the directory using the command below:
     cd <name of the directory>
 
 Then, run the following command in the terminal:
-    
-    git clone https://github.com/leahst05/expense-tracker-api.git
-  
+     ```bash
+     git clone https://github.com/leahst05/expense-tracker-api.git
+    ```
 - Install dependencies
   ```bash
   npm init
@@ -38,7 +38,7 @@ Then, run the following command in the terminal:
   npm install firebase-admin --save
 
 - Set up Port and Firebase credentials:
-Create a .env file in the root directory of the project and add the following details. You can obtain the service account JSON file from your Firebase console:
+Create a .env file in the root directory of the project and add the following details. Please contact me directly to obtain the Firebase service account JSON file:
   ```env
   PORT=your_preferred_port_number
   # firebase credentials
@@ -136,12 +136,72 @@ Below are examples of the data structure used by the API. Please note that if yo
 - Income Data Example
   ```json
   {
-    "interest": 350,
-    "others": 600,
+    "wages": 4000,
     "secondary income": 1500,
-    "support payment": 120,
-    "wages": 8000
+    "interest": 350,
+    "others": 600
   }
+
+# Deployment
+You can also access the deployed version of this API if you prefer not to set up the server locally. The API is hosted on Netlify and is available for direct interaction.
+
+ Deployed API URL: https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server
+
+ How to Use the Deployed API
+
+To interact with the API, simply append the desired endpoint path to the base URL. Below are examples of how to access each section of the API:
+
+## Users Endpoints:
+- Get all users:
+GET request to: 
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/users
+
+- Add a new user:
+POST request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/users
+
+- Update an existing user by ID:
+PUT request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/users/:id
+
+- Delete a user by ID:
+DELETE request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/users/:id
+
+## Expenses Endpoints:
+- Get all expenses:
+ GET request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/expenses
+
+- Add a new expense:
+POST request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/expenses
+
+- Update an existing expense by ID:
+PUT request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/expenses/:id
+
+- Delete an expense by ID:
+DELETE request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/expenses/:id
+
+## Income Endpoints:
+- Get all income records:
+GET request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/income
+
+- Add a new income record:
+POST request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/income
+
+- Update an existing income record by ID:
+PUT request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/income/:id
+
+- Delete an income record by ID:
+DELETE request to:
+https://67b6d47cd5e10171c1ff06da--express-tracker-api.netlify.app/.netlify/functions/server/income/:id
+
 
 # Conclusion
 This project provides a simple yet effective REST API for managing users, expenses, and income records. It utilizes Node.js, Express, and Firebase for a robust backend solution. The application is fully functional with support for CRUD operations, secure Firebase credential management using environment variables, and error handling.
